@@ -1,6 +1,6 @@
 from celery import Celery
 import os
-
+ 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fakeNews.settings')
 
 app = Celery('fakeNews')

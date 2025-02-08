@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Fake News</title>
+</head>
+<body>
+    <h1>오늘의 뉴스</h1>
+    <button id="generateButton">뉴스 보기</button>
+    <div id="result"></div>
+    <div id="loading" style="display:none;">로딩 중...</div>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', function() {
+            const loadingDiv = document.getElementById('loading');
+            const resultDiv = document.getElementById('result');
+            loadingDiv.style.display = 'block'; // 로딩 중 표시
+
+            // task_id를 Django 템플릿에서 전달받은 값으로 설정
+            const taskId = "{{ task_id }}";
+            checkTaskStatus(taskId);  // 작업 상태 확인
+        });
+
+        function checkTaskStatus(taskId) {
+            const resultDiv = document.getElementById('result');
+            fetch(`/task_status/${taskId}/`)  // task_id로 상태 확인
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'Completed') {
+                        document.getElementById('loading').style.display = 'none'; // 로딩 중 표시 제거
+                        resultDiv.innerHTML = '<h2>뉴스 등장</h2><p>' + data.result + '</p>';
+                    } else {
+                        setTimeout(() => checkTaskStatus(taskId), 1000);
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
