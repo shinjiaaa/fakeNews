@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>챗봇</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <style>
+      @font-face {
+        font-family: 'Ownglyph_ParkDaHyun';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        background-color: white;
+        font-family: 'Ownglyph_ParkDaHyun';
+      }
+
+      h1 {
+        text-align: center;
+        justify-content: center;
+        color: white;
+        margin: 0.75rem auto;
+      }
+
+      .phone {
+        width: 16rem;
+        height: 36rem;
+        background-color: #101010;
+        border: 5px solid #444444;
+        border-radius: 30px;
+        text-align: center;
+        margin: 5rem auto;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      input:focus {
+        outline: none;
+      }
+
+      #chatbox {
+        flex-grow: 1;
+        overflow-y: scroll;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* 스크롤바 스타일 */
+      #chatbox::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+
+      #chatbox::-webkit-scrollbar-thumb {
+        background: #444;
+        border-radius: 10px;
+      }
+
+      .message {
+        max-width: 70%;
+        padding: 8px 12px;
+        border-radius: 15px;
+        font-size: 14px;
+        word-wrap: break-word;
+      }
+
+      .user-message {
+        align-self: flex-end;
+        background-color: #444;
+        color: white;
+        text-align: right;
+        font-size: 1.1rem;
+      }
+
+      .bot-message {
+        align-self: flex-start;
+        background-color: white;
+        color: #444;
+        text-align: left;
+        font-size: 1.1rem;
+      }
+
+      #userMessage {
+        width: 14rem;
+        height: 2rem;
+        padding-left: 1rem;
+        margin-right: 0.5rem;
+        border: none;
+        border-radius: 15px;
+        font-family: 'Ownglyph_ParkDaHyun';
+        font-size: 1.1rem;
+      }
+
+      button {
+        width: 4rem;
+        border: none;
+        border-radius: 15px;
+        background-color: #444;
+        color: white;
+        cursor: pointer;
+        font-family: 'Ownglyph_ParkDaHyun';
+        font-size: 1.1rem;
+      }
+
+      .textBox {
+        display: flex;
+        margin-top: 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      hr {
+        width: 16rem;
+      }
+
+      .header {
+        display: flex;
+      }
+
+      .exit-button {
+        border: none;
+        border-radius: 30px;
+        background-color: white;
+        cursor: pointer;
+        width: 3rem;
+        height: 3rem;
+        margin: 0.75rem auto 0 auto;
+      }
+    </style>
+
+    <div class="phone">
+      <div class="header">
+        <h1>채팅</h1>
+      </div>
+      <hr />
+
+      <div id="chatbox"></div>
+
+      <div class="textBox">
+        <input type="text" id="userMessage" placeholder="메시지를 입력하세요" />
+        <button onclick="sendMessage()">보내기</button>
+      </div>
+      <hr />
+      <button class="exit-button" onclick="exitChat()"></button>
+    </div>
+
+    <script>
+      function sendMessage() {
+        const message = document.getElementById("userMessage").value;
+        if (!message) return;
+
+        // 사용자의 메시지를 채팅창에 추가 (오른쪽 정렬)
+        $("#chatbox").append(
+          `<div class="message user-message">${message}</div>`
+        );
+
+        document.getElementById("userMessage").value = "";
+
+        // 서버에 메시지를 전송하고 응답을 받아옴
+        $.get("/chatbot/response/", { message: message }, function (data) {
+          if (data.response) {
+            // 챗봇의 응답을 채팅창에 추가 (왼쪽 정렬)
+            $("#chatbox").append(
+              `<div class="message bot-message">${data.response}</div>`
+            );
+          } else {
+            $("#chatbox").append(
+              `<div class="message bot-message">오류가 발생했습니다.</div>`
+            );
+          }
+
+          // 채팅창을 아래로 스크롤
+          $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+        });
+      }
+
+      function exitChat() {
+        window.location.href = '../';
+      }
+    </script>
+  </body>
+</html>
