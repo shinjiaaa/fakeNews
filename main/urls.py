@@ -9,4 +9,5 @@ urlpatterns = [
     ),  # 생성된 뉴스 확인
     path("chatbot/", include("chatbot.urls")),
     path("tutorial/", include("tutorial.urls")),
+    path("phone/", include("phone.urls")),
 ]

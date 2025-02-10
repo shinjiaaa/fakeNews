@@ -41,6 +41,8 @@ input:focus {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    height: 40rem;
+    
 }
 
   /* 스크롤바 스타일 */
@@ -103,17 +105,19 @@ input:focus {
     display: flex;
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
-  }
 
-  hr {
+    background-color: #101010;
+}
+
+hr {
     width: 16rem;
-  }
+}
 
-  .header {
+.header {
     display: flex;
-  }
+}
 
-  .exit-button {
+.exit-button {
     border: none;
     border-radius: 30px;
     background-color: white;
@@ -121,4 +125,10 @@ input:focus {
     width: 3rem;
     height: 3rem;
     margin: 0.75rem auto 0 auto;
-  }
+}
+
+.exitBox {
+    position: fixed;
+    margin: auto;
+    bottom: 11rem;
+}

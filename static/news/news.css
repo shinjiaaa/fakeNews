@@ -111,3 +111,9 @@ h1 {
 #result {
     color: white;
 }
+
+.exitBox {
+    position: fixed;
+    margin: auto;
+    bottom: 11rem;
+}
