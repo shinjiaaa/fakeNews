@@ -1,0 +1,42 @@
+body {
+    font-family: 'Ownglyph_ParkDaHyun';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#comment {
+    font-size: 1.35rem;
+    color: white;
+    
+    width: 18rem;
+    height: 7rem;
+    background-color: #2929297a;
+    border-radius: 30px;
+
+    position: fixed;
+    bottom: 3rem;
+
+    padding: 1rem 1.5rem;
+}
+
+.userImg {
+    width: 10rem;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+}
+
+#phoneIcon {
+    left: 1rem;
+    top: 1rem;
+    background-color: black;
+    width: 2rem;
+    height: 3.5rem;
+    border: 0.55rem solid #444;
+    border-radius: 18px;
+    position: fixed;
+}

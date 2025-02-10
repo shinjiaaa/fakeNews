@@ -8,4 +8,5 @@ urlpatterns = [
         "task_status/<str:task_id>/", views.check_task_status, name="check_task_status"
     ),  # 생성된 뉴스 확인
     path("chatbot/", include("chatbot.urls")),
+    path("tutorial/", include("tutorial.urls")),
 ]

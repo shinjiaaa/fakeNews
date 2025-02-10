@@ -4,8 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>main page</title>
+    <link rel="stylesheet" href="/static/main/main.css">
+    <link rel="stylesheet" href="/static/tutorial/tutorial.css">
 </head>
 <body>
-    <img src="/static/img/user.png">
+    <div class="tutorialOverlay">
+        <div class="tureBox">
+          <img class="ture" src="/static/img/ture.png" alt="Ture" />
+          <div id="tutorialComment"></div>
+        </div>
+      </div>
+
+    <img class="userImg" src="/static/img/user.png">
+    <div id="comment"></div>
+
+    <div id="phoneIcon" onclick="location.href='/phone'"></div>
+
+    <script>
+
+        const dialogues = [
+        "안녕! 난 트루야.",
+        "네가 잠시 머물 이 세계에\n대해 설명해 줄게.",
+        "아, 나는 이름처럼 진실만\n말하니까 믿어두 돼~",
+        "그럼 시작해 볼까?",
+      ];
+
+      let currentDialogueIndex = 0;
+      const tutorialCommentElement = document.getElementById("tutorialComment");
+      const tutorialOverlay = document.querySelector(".tutorialOverlay");
+      const mainContent = document.querySelector(".mainContent");
+
+      function typeText(text, index = 0) {
+        if (index === 0) tutorialCommentElement.innerHTML = "";
+        if (index < text.length) {
+          tutorialCommentElement.innerHTML +=
+            text[index] === "\n" ? "<br>" : text[index];
+          setTimeout(() => typeText(text, index + 1), 50);
+        }
+      }
+
+      function nextDialogue() {
+        if (currentDialogueIndex < dialogues.length) {
+          typeText(dialogues[currentDialogueIndex]);
+          currentDialogueIndex++;
+        } else {
+          fadeOutTutorial();
+        }
+      }
+
+      function fadeOutTutorial() {
+        tutorialOverlay.style.opacity = "0";
+        setTimeout(() => {
+          tutorialOverlay.style.display = "none";
+        }, 1000);
+      }
+
+      document.body.addEventListener("click", nextDialogue);
+      nextDialogue();
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            
+                const dialogues = [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "자, 먼저 왼쪽 상단에 있는 휴대폰을 눌러 볼래?",
+                ];
+
+                let currentDialogueIndex = 0;
+                const commentElement = document.getElementById("comment");
+
+                function typeText(text, index = 0) {
+                    if (index === 0) commentElement.innerHTML = "";
+                    if (index < text.length) {
+                        commentElement.innerHTML += text[index] === "\n" ? "<br>" : text[index];
+                        setTimeout(() => typeText(text, index + 1), 50);
+                    }
+                }
+
+                function nextDialogue() {
+                    if (currentDialogueIndex < dialogues.length) {
+                        typeText(dialogues[currentDialogueIndex]);
+                        currentDialogueIndex++;
+                    }
+                }
+
+                nextDialogue();
+
+                document.body.addEventListener("click", nextDialogue);
+            }
+        );
+    </script>
 </body>
 </html>
